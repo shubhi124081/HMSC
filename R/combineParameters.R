@@ -54,7 +54,9 @@ combineParameters = function(Beta, BetaSel, wRRR, Gamma, iV, rho, iSigma, Eta,
 
    V = chol2inv(chol(iV))
    sigma = 1/iSigma
-   par = list(Beta=Beta, wRRR=wRRR, Gamma=Gamma, V=V, rho=rhopw[rho,1], sigma=sigma, Eta=Eta, Lambda=Lambda, Alpha=Alpha, Psi=Psi, Delta=Delta, PsiRRR=PsiRRR, DeltaRRR=DeltaRRR)
+   par = list(Beta=Beta, wRRR=wRRR, Gamma=Gamma, V=V, rho=rhopw[1,1], sigma=sigma, Eta=Eta, Lambda=Lambda, Alpha=Alpha, Psi=Psi, Delta=Delta, PsiRRR=PsiRRR, DeltaRRR=DeltaRRR)
 }
+
+#instead of rho = rhopw[rho, 1] make it rho = rhopw[1, 1] - changed by Shubhi 
 
 

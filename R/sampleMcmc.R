@@ -162,11 +162,6 @@ sampleMcmc =
       if(updaterWarningFlag)
          message("Setting updater$GammaEta=FALSE due to absence of random effects included to the model")
    }
-   if(identical(updater$latentLoadingOrderSwap, NULL)){
-      updater$latentLoadingOrderSwap = 0
-      if(updaterWarningFlag)
-         message("Setting updater$latentLoadingOrderSwap=0 disabling full-conditional swapping of consecuitive latent loadings")
-   }
 
 
    sampleChain = function(chain){
@@ -313,7 +308,7 @@ sampleMcmc =
          for(r in seq_len(nr)){
             if(iter <= adaptNf[r]){
                listPar = updateNf(eta=Eta[[r]],lambda=Lambda[[r]],alpha=Alpha[[r]],psi=Psi[[r]],delta=Delta[[r]],
-                                  rL=hM$rL[[r]], iter=iter)
+                  rL=hM$rL[[r]], iter=iter)
                Lambda[[r]] = listPar$lambda
                Eta[[r]] = listPar$eta
                Alpha[[r]] = listPar$alpha
@@ -322,21 +317,8 @@ sampleMcmc =
             }
          }
 
-         if(updater$latentLoadingOrderSwap>0 && (iter %% updater$latentLoadingOrderSwap == 0)){
-            for(r in seq_len(nr)){
-               listPar = updateLatentLoadingOrder(eta=Eta[[r]],lambda=Lambda[[r]],alpha=Alpha[[r]],delta=Delta[[r]],rL=hM$rL[[r]])
-               Lambda[[r]] = listPar$lambda
-               Eta[[r]] = listPar$eta
-               Alpha[[r]] = listPar$alpha
-               Delta[[r]] = listPar$delta
-            }
-            PsiDeltaList = updateLambdaPriors(Lambda=Lambda,Delta=Delta, rL=hM$rL)
-            Psi = PsiDeltaList$Psi
-            Delta = PsiDeltaList$Delta
-         }
-
          if((iter>transient) && ((iter-transient) %% thin == 0)){
-            postList[[(iter-transient)/thin]] = combineParameters(Beta=Beta,BetaSel=BetaSel,wRRR = wRRR, Gamma=Gamma,iV=iV,rho=rho,iSigma=iSigma,
+            postList[[(iter-transient)/thin]] = combineParameters(Beta=Beta,BetaSel=BetaSel,wRRR = wRRR, Gamma=Gamma,iV=iV,rho=rhopw,iSigma=iSigma, #changed by Shubhi
                Eta=Eta,Lambda=Lambda,Alpha=Alpha,Psi=Psi,Delta=Delta,
                PsiRRR=PsiRRR,DeltaRRR=DeltaRRR,
                ncNRRR=hM$ncNRRR, ncRRR=hM$ncRRR, ncsel = hM$ncsel, XSelect = hM$XSelect,

@@ -237,7 +237,7 @@ plotBeta = function(hM, post, param = "Support", plotTree = FALSE,
       zlim = c(-max(abs(range(X))),max(abs(range(X))))
    }
 
-   image.plot(x = seq(START+ADJx, END-ADJx, by = ((END-ADJx) - (START+ADJx))/(ncol(X) - 1)),
+   fields::image.plot(x = seq(START+ADJx, END-ADJx, by = ((END-ADJx) - (START+ADJx))/(ncol(X) - 1)),
               y = seq(ADJy, 1-ADJy, length.out=nrow(X)),
               z = t(X), add = TRUE, nlevel = colorLevels, box=TRUE,
               legend.width = 2, legend.mar = NULL,

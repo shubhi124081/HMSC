@@ -74,7 +74,7 @@ computeInitialParameters = function(hM, initPar){
          fm = lm.fit(hM$Tr, Beta[k,])
          Gamma[k,] = coef(fm)
       }
-      V = rowSums(abind(cov(t(Beta-tcrossprod(Gamma,hM$Tr))), diag(hM$nc), along=3), na.rm=TRUE, dims=2)
+      V = rowSums(abind::abind(cov(t(Beta-tcrossprod(Gamma,hM$Tr))), diag(hM$nc), along=3), na.rm=TRUE, dims=2)
 
       initPar = NULL
    } else{
@@ -88,7 +88,7 @@ computeInitialParameters = function(hM, initPar){
       if(!is.null(initPar$V)){
          V = initPar$V
       } else{
-         V = riwish(hM$f0, hM$V0)
+         V = MCMCpack::riwish(hM$f0, hM$V0)
       }
 
       if(!is.null(initPar$Beta)){
@@ -97,7 +97,7 @@ computeInitialParameters = function(hM, initPar){
          Beta = matrix(NA, hM$nc, hM$ns)
          Mu = tcrossprod(Gamma,hM$Tr)
          for(j in 1:hM$ns){
-            Beta[,j] = mvrnorm(1, Mu[,j], V)
+            Beta[,j] = MASS::mvrnorm(1, Mu[,j], V)
          }
       }
    }

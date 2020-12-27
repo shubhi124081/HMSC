@@ -21,6 +21,7 @@ updateRho = function(Beta,Gamma,iV, RQg,detQg, Tr, rhopw){
    # indPos = which(like>0)
    # rho = indPos[sample(c(1:rhoN)[indPos], prob=like[indPos])]
    rho = sample.int(rhoN, 1, prob=like)
+   
    return(rho)
 }
 

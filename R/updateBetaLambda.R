@@ -123,7 +123,7 @@ updateBetaLambda = function(Y,Z,Gamma,iV,iSigma,Eta,Psi,Delta,rho, iQ, X,Tr,Pi,d
 
    } else{
       # available phylogeny information
-      P = bdiag(kronecker(iV,iQ), Diagonal(x=t(priorLambda)))
+      P = Matrix::bdiag(kronecker(iV,iQ), Matrix::Diagonal(x=t(priorLambda)))
       switch(class(X)[1L],
          matrix = {
             RiU = chol(kronecker(XEtaTXEta,diag(iSigma)) + P)
@@ -135,7 +135,7 @@ updateBetaLambda = function(Y,Z,Gamma,iV,iSigma,Eta,Psi,Delta,rho, iQ, X,Tr,Pi,d
             tmpMat = Reduce(rbind, tmp)
             ind1 = rep(rep(1:ns,each=nc+nfSum)+ns*rep(0:(nc+nfSum-1),ns), nc+nfSum)
             ind2 = rep(1:((nc+nfSum)*ns), each=nc+nfSum)
-            mat = sparseMatrix(ind1, ind2, x=as.vector(tmpMat))
+            mat = Matrix::sparseMatrix(ind1, ind2, x=as.vector(tmpMat))
             RiU = chol(as.matrix(mat) + P)
          }
       )
